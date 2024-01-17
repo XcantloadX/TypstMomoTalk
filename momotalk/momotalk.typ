@@ -89,7 +89,7 @@
   triangle = scale(triangle, x: 50%, y: 50%)
 
   if (no_box){
-    return text(fill: white, content)
+    return text(content)
   }
   
   if (direction == "left") {
@@ -130,7 +130,9 @@
 // @param name str|none 发送者名字。可空。
 // @param avatar_path str|none 头像图片路径。可空
 // @param direction str 消息方向。可选 left、right。
-// @param contents array|content|str 消息内容。
+// @param contents any|arguments|array[any|arguments]
+//        消息内容。可以为空，或 content/str 对象。
+//        也可以是一个 arguments 对象，相当于传入给 `msgbox` 函数的参数。
 #let messages(
   name,
   avatar_path,
@@ -159,18 +161,24 @@
     weight: "bold",
     name
   ))
+
+  // 然后渲染消息框
+  let render(_content, _direction) = {
+    if (type(_content) == arguments) {
+      msgbox(.._content)
+    }
+    else {
+      msgbox(
+        direction: _direction,
+        background_color: background_color,
+        _content
+      )
+    }
+  }
   // 第一个消息框有小三角，后续的没有
-  rendered_contents.push(msgbox(
-    contents.remove(0),
-    direction: direction,
-    background_color: background_color
-  ))
+  rendered_contents.push(render(contents.remove(0), direction))
   for c in contents {
-    rendered_contents.push(msgbox(
-      c,
-      direction: "none",
-      background_color: background_color
-    ))
+    rendered_contents.push(render(c, "none"))
   }
 
   // 头像部分

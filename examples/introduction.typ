@@ -1,4 +1,5 @@
 #import "/momotalk/momotalk.typ": *
+#import "/momotalk/files.typ": *
 #import "/momotalk/characters.typ" : *
 #show: doc => chat(
   doc,
@@ -28,6 +29,7 @@
     （PS：由于字体原因，粗体和中文斜体无法显示。）
   ],
   [当然，你也可以插入图片：#image("/examples/azusa.jpg", width: 30%)],
+  // arguments(no_box: true)[#image("/examples/azusa.jpg", width: 30%)],
   [
     以及标题：
     = 标题
@@ -114,11 +116,19 @@
 ))
 #sensei(voice_call[对方已拒绝])
 
-#yuuka[行动消息展示：]
+#yuuka[行动消息：]
 #action[这是一条行动消息 #emoji.thumb]
 #time[15:22:41]
 #unsend[优香]
 #unsend[优香]
 #time[以下是新消息]
+
+#yuuka[文件消息：]
+#yuuka((
+  file("RABBIT dance.mp3", "3.2 MB"),
+  file("a.mp4", "4.7 GB"),
+  file("本月开支.xlsx", "2.7 MB", footer: [MomoTalk 电脑版])
+))
+#sensei(file("检讨.docx", "6.7 MB"))
 
 #yuuka[更多消息类型正在开发中！]
